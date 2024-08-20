@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center">
+    <div class="row">
+        <div class="card box-shadow mt-5">
+            <div class="card-header text-center">
+                <h2>Currency exchange application</h2>
+            </div>
+        </div>
+        <form id="form" class="p-3 bg-light" action="" method="post">
+            {% csrf_token %}
+            <div class="form-row d-flex justify-content-evenly align-items-center">
+                <div class="form-group col-md-4 ml-3">
+                    <label for="entered_sum">Your sum</label>
+                    <input id="entered_sum" name="entered_sum" value="{{ entered_sum }}" type="number" class="form-control" placeholder="Enter the amount of money">
+                </div>
+                <div class="form-group col-md-4 ml-3">
+                    <label for="from_cur">Base currency</label>
+                    <select name="from_cur" id="from_cur">
+                        {% for cur in all_curs %}
+                            <option value="{{ cur }}" {% if from_cur == cur %} selected {% endif %}>{{ cur }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="to_cur">To currency</label>
+                    <select name="to_cur" id="to_cur">
+                        {% for cur in all_curs %}
+                            <option value="{{ cur }}" {% if to_cur == cur %} selected {% endif %}>{{ cur }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="submit-btn mt-4">
+                <button type="submit" class="btn btn-primary btn-large">
+                    CONVERT
+                </button>
+            </div>
+            {% if converted_sum %}
+                <div class="form-row mt-3">
+                    <p>Converted sum:</p>
+                    {{ converted_sum }}
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}
